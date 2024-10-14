@@ -1,3 +1,4 @@
+/* Reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,104 +7,261 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f7f7f7;
-    color: #000;
+    background-color: #0d0d0d;
+    color: #f7f7f7;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     min-height: 100vh;
     padding: 20px;
 }
 
+/* Header styling */
 header {
-    background-color: #3b5998;
-    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 20px;
-    text-align: center;
-    width: 100%;
-    border-radius: 10px;
+    color: #fff;
 }
 
-main {
-    width: 100%;
-    max-width: 600px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin-top: 20px;
+h1 {
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.tracker {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 2rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.header-icons button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #f7f7f7;
+    cursor: pointer;
 }
 
-h1, h2 {
-    margin-bottom: 20px;
+.add-icon {
+    font-size: 28px;
 }
 
-form {
+/* Workout Cards */
+.workout-cards {
     display: flex;
     flex-direction: column;
-    gap: 15px; 
+    align-items: center;
+    margin-top: 30px;
 }
 
-input, select, button {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 15px; 
+.workout-card {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-select {
-    padding: 12px; 
-    margin-bottom: 20px; 
+.workout-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
 }
 
-button {
-    background-color: #3b5998;
-    color: white;
+.workout-details {
+    color: #f7f7f7;
+}
+
+.workout-count {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.workout-name {
+    font-size: 18px;
+}
+
+.workout-status {
+    font-size: 14px;
+    color: #a3a3a3;
+}
+
+.options-icon {
+    background: none;
     border: none;
+    font-size: 24px;
+    color: #a3a3a3;
     cursor: pointer;
-    margin-top: 20px; 
 }
 
-button:hover {
-    background-color: #2a4371;
+/* Bottom Navigation */
+footer {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
 }
 
-ul {
-    list-style: none;
+.bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #f7f7f7;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-item:hover {
+    color: #a3a3a3;
+}
+
+/* Exercise List */
+.exercise-list {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.exercise-list ul {
+    list-style-type: none;
     padding: 0;
 }
 
-ul li {
-    background: #efefef;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    display: flex;
-    justify-content: space-between;
+.exercise-list li {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2e2e2e;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.exercise-list li:hover {
+    background-color: #3b5998;
+}
+
+/* Exercise Form */
+.exercise-form {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Set List */
 #set-list {
     list-style-type: none;
+    padding: 0;
 }
 
 #set-list li {
-    padding: 10px;
-    background-color: #f0f0f0;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #3a3a3a;
+    margin-bottom: 5px;
 }
 
-footer {
-    margin-top: 20px;
+.exercise-form {
+    background-color: #f9f9f9; /* Light background for contrast */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Spacing inside the form */
+    margin-top: 16px; /* Space above the form */
+}
+
+.input-group {
+    margin-bottom: 12px; /* Space between input fields */
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%; /* Full width for inputs */
+    padding: 10px; /* Spacing inside inputs */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 16px; /* Larger font size */
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+    outline: none; /* Remove outline */
+}
+
+.submit-button {
+    width: 100%; /* Full width for button */
+    padding: 12px; /* Spacing inside button */
+    background-color: #007bff; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Larger font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.submit-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+ul {
+    list-style-type: none; /* Remove bullets from list */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+ul li {
+    padding: 8px; /* Spacing inside list items */
+    border-bottom: 1px solid #ddd; /* Divider for each item */
+}
+
+ul li:last-child {
+    border-bottom: none; /* Remove divider from last item */
+}
+
+.exercise-card {
+    background-color: #1e1e1e; /* Matching background with workout cards */
+    border: 1px solid #333; /* Slightly darker border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 16px; /* Spacing inside the card */
+    margin-bottom: 16px; /* Space between cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Light shadow for depth */
+    transition: transform 0.2s, box-shadow 0.2s; /* Transition effects */
+}
+
+.exercise-card:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+}
+
+.exercise-card h4 {
+    margin: 0 0 12px; /* Spacing below title */
+    font-size: 20px; /* Slightly larger title font size */
+    color: #f7f7f7; /* Title color */
+}
+
+.exercise-card ul {
+    list-style-type: none; /* Remove bullets from list */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.exercise-card ul li {
+    padding: 4px 0; /* Spacing inside list items */
+    border-bottom: 1px solid #444; /* Darker divider for contrast */
+    color: #ccc; /* Slightly lighter text color */
+}
+
+.exercise-card ul li:last-child {
+    border-bottom: none; /* Remove divider from last item */
 }

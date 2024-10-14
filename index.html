@@ -8,35 +8,53 @@
 </head>
 <body>
     <header>
-        <h1>Gym Set Tracker</h1>
+        <h1>Workouts</h1>
+        <div class="header-icons">
+            <button class="filter-icon" aria-label="Settings/Filter">&#9881;</button> <!-- Settings/Filter Icon -->
+            <button class="add-icon" aria-label="Add New Workout">+</button> <!-- Add Icon -->
+        </div>
     </header>
+
     <main>
-        <section class="tracker">
-            <h2>Track Your Sets</h2>
-            <form id="set-form">
-                <input type="text" id="exercise" placeholder="Exercise" required>
-                <select id="exercise-type">
-                    <option value="sets">Sets & Reps</option>
-                    <option value="time">Time</option>
-                    <option value="distance">Distance</option>
-                </select>
-                <input type="number" id="reps" placeholder="Reps" class="exercise-input">
-                <input type="number" id="weight" placeholder="Weight (lbs)" class="exercise-input">
-                <input type="number" id="time" placeholder="Time (minutes)" class="exercise-input hidden">
-                <input type="number" id="distance" placeholder="Distance (miles)" class="exercise-input hidden">
-                <button type="submit">Add Set</button>
-            </form>
-            <ul id="set-list"></ul>
+        <section class="workout-cards">
+            <div class="workout-card" onclick="toggleExerciseForm(this)">
+                <div class="workout-details">
+                    <p class="workout-count">0</p>
+                    <p class="workout-name">Pull</p>
+                    <p class="workout-status">Unscheduled</p>
+                </div>
+                <button class="options-icon" aria-label="More Options">&#8942;</button> <!-- Three dots for options -->
+            </div>
+            <div class="exercise-list" style="display: none;">
+                <div class="exercise-form" style="display: block;">
+                    <h3>Add New Set</h3>
+                    <form id="exercise-form">
+                        <div class="input-group">
+                            <input type="text" id="exercise" placeholder="Exercise Name" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" id="reps" placeholder="Reps" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" id="weight" placeholder="Weight (kg)" required>
+                        </div>
+                        <button type="submit" class="submit-button">Add Set</button>
+                    </form>
+                </div>
+                <div id="exercise-cards-container"></div> <!-- Container for exercise cards -->
+            </div>
         </section>
-        <form id="routine-form">
-            <input type="text" id="routine-name" placeholder="Routine Name" required>
-            <ul id="routine-list"></ul>
-            <button type="submit">Save Routine</button>
-        </form>
     </main>
+
     <footer>
-        <p>&copy; 2024 Gym Set Tracker</p>
+        <nav class="bottom-nav">
+            <button class="nav-item" aria-label="Home">🏠</button> <!-- Home Icon -->
+            <button class="nav-item" aria-label="Calendar">🗓️</button> <!-- Calendar Icon -->
+            <button class="nav-item" aria-label="Statistics">📊</button> <!-- Stats Icon -->
+            <button class="nav-item" aria-label="Chat">💬</button> <!-- Chat Icon -->
+        </nav>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

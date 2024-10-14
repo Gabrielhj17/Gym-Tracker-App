@@ -1,55 +1,121 @@
-document.getElementById('exercise-type').addEventListener('change', function(e) {
-    const selected = e.target.value;
-    document.querySelectorAll('.exercise-input').forEach(input => input.classList.add('hidden'));
-    if (selected === 'sets') {
-        document.getElementById('reps').classList.remove('hidden');
-        document.getElementById('weight').classList.remove('hidden');
-    } else if (selected === 'time') {
-        document.getElementById('time').classList.remove('hidden');
-    } else if (selected === 'distance') {
-        document.getElementById('distance').classList.remove('hidden');
+const exercises = {};
+
+document.getElementById('exercise-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const exerciseName = document.getElementById('exercise').value;
+    const reps = document.getElementById('reps').value;
+    const weight = document.getElementById('weight').value;
+
+    // Initialize exercise if it doesn't exist
+    if (!exercises[exerciseName]) {
+        exercises[exerciseName] = [];
+    }
+
+    // Add the set to the specific exercise
+    exercises[exerciseName].push({ reps, weight });
+
+    // Update the exercise list UI
+    updateExerciseCards();
+
+    // Reset the form
+    document.getElementById('exercise-form').reset();
+});
+
+function updateExerciseCards() {
+    const exerciseCardsContainer = document.getElementById('exercise-cards-container');
+    exerciseCardsContainer.innerHTML = ''; // Clear current cards
+
+    for (const exercise in exercises) {
+        const exerciseCard = document.createElement('div');
+        exerciseCard.classList.add('exercise-card');
+        exerciseCard.innerHTML = `
+            <h4>${exercise}</h4>
+            <ul>
+                ${exercises[exercise].map(set => `<li>${set.weight} kg - ${set.reps} reps</li>`).join('')}
+            </ul>
+        `;
+        exerciseCardsContainer.appendChild(exerciseCard);
+    }
+}
+
+
+// Add event listener to the add set button
+document.getElementById('add-set-button').addEventListener('click', function() {
+    const selectedExercise = document.querySelector('.selected-exercise');
+
+    // Check if there is a selected exercise
+    if (selectedExercise) {
+        const exerciseName = selectedExercise.textContent.trim();
+        const setList = document.getElementById('set-list');
+        
+        // If sets are currently displayed, clear them
+        if (setList.innerHTML !== '') {
+            setList.innerHTML = ''; // Clear displayed sets
+            return; // Exit to prevent adding another set
+        }
+
+        // Display sets for the selected exercise
+        displaySets(exerciseName); 
     }
 });
 
-document.getElementById('set-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+// Update the exercise list UI
+function updateExerciseList() {
+    const exerciseList = document.getElementById('exercise-list');
+    exerciseList.innerHTML = ''; // Clear current list
 
-    const exercise = document.getElementById('exercise').value;
-    const exerciseType = document.getElementById('exercise-type').value;
-    let logEntry = exercise;
-
-    if (exerciseType === 'sets') {
-        const reps = document.getElementById('reps').value;
-        const weight = document.getElementById('weight').value;
-        logEntry += ` - ${reps} reps - ${weight} lbs`;
-    } else if (exerciseType === 'time') {
-        const time = document.getElementById('time').value;
-        logEntry += ` - ${time} minutes`;
-    } else if (exerciseType === 'distance') {
-        const distance = document.getElementById('distance').value;
-        logEntry += ` - ${distance} miles`;
+    for (const exercise in exercises) {
+        const li = document.createElement('li');
+        li.textContent = exercise;
+        li.classList.add('exercise-item');
+        li.onclick = function () {
+            displaySets(exercise);
+        };
+        exerciseList.appendChild(li);
     }
+}
 
-    const setItem = document.createElement('li');
-    setItem.textContent = logEntry;
+// Display sets for a selected exercise
+function displaySets(exerciseName) {
+    const setList = document.getElementById('set-list');
+    setList.innerHTML = ''; // Clear current set list
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-        setItem.remove();
+    // Populate the set list with sets of the selected exercise
+    exercises[exerciseName].forEach((set) => {
+        const li = document.createElement('li');
+        li.textContent = `${set.weight} kg - ${set.reps} reps`;
+        setList.appendChild(li);
     });
 
-    setItem.appendChild(deleteButton);
-    document.getElementById('set-list').appendChild(setItem);
+    // Mark the clicked exercise as selected
+    const exerciseItems = document.querySelectorAll('.exercise-item');
+    exerciseItems.forEach(item => item.classList.remove('selected-exercise')); // Remove any existing selection
+    const selectedItem = [...exerciseItems].find(item => item.textContent.trim() === exerciseName);
+    if (selectedItem) {
+        selectedItem.classList.add('selected-exercise'); // Add selected class to the clicked item
+    }
 
-    document.getElementById('set-form').reset();
-});
-const routines = [];
+    // Show the exercise form
+    const exerciseForm = document.querySelector('.exercise-form');
+    exerciseForm.style.display = 'block'; // Show the form
+}
 
-document.getElementById('routine-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const routineName = document.getElementById('routine-name').value;
-    const routineSets = [...document.querySelectorAll('#set-list li')].map(li => li.textContent);
-    routines.push({ name: routineName, sets: routineSets });
-    alert(`${routineName} routine saved!`);
-});
+// Toggle the exercise form and set list visibility
+function toggleExerciseForm(workoutCard) {
+    const exerciseList = workoutCard.nextElementSibling; // Get the exercise list associated with the clicked workout
+    const displayStyle = exerciseList.style.display;
+
+    // Toggle visibility of the exercise list
+    exerciseList.style.display = displayStyle === 'none' || displayStyle === '' ? 'block' : 'none';
+
+    // Always show the add set button at the top
+    const addSetButton = exerciseList.querySelector('#add-set-button');
+    addSetButton.style.display = 'block'; // Ensure add set button is visible
+
+    // Clear set list if visible
+    const setList = exerciseList.querySelector('#set-list');
+    if (setList.innerHTML !== '') {
+        setList.innerHTML = ''; // Clear displayed sets if they are currently shown
+    }
+}
