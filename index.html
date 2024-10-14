@@ -10,12 +10,17 @@
     <header>
         <h1>Workouts</h1>
         <div class="header-icons">
-            <button class="filter-icon" aria-label="Settings/Filter">&#9881;</button> <!-- Settings/Filter Icon -->
-            <button class="add-icon" aria-label="Add New Workout">+</button> <!-- Add Icon -->
+            <button class="add-icon" id="show-add-form" aria-label="Add New Workout">+</button>
         </div>
     </header>
 
     <main>
+        <div class="add-workout-card" id="add-workout-card" style="display: none;">
+            <form id="new-workout-form">
+                <input type="text" id="workout-name" placeholder="Workout Name" required>
+                <button type="submit" class="add-workout-button">Add Workout</button>
+            </form>
+        </div>
         <section class="workout-cards">
             <div class="workout-card" onclick="toggleExerciseForm(this)">
                 <div class="workout-details">
@@ -36,12 +41,14 @@
                             <input type="number" id="reps" placeholder="Reps" required>
                         </div>
                         <div class="input-group">
+                            <label for="weight">Weight</label>
+                            <button id="weight-toggle" type="button">Switch to lbs</button>
                             <input type="number" id="weight" placeholder="Weight (kg)" required>
                         </div>
                         <button type="submit" class="submit-button">Add Set</button>
                     </form>
                 </div>
-                <div id="exercise-cards-container"></div> <!-- Container for exercise cards -->
+                <div id="set-list"></div> <!-- Container for sets -->
             </div>
         </section>
     </main>

@@ -19,15 +19,18 @@ body {
 /* Header styling */
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center align header content */
     align-items: center;
     padding: 20px;
     color: #fff;
+    flex-direction: column; /* Stack items vertically */
 }
 
 h1 {
     font-size: 28px;
     font-weight: bold;
+    text-align: center; /* Center the text */
+    margin-bottom: 10px; /* Space below the title */
 }
 
 .header-icons button {
@@ -55,11 +58,12 @@ h1 {
     border-radius: 12px;
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: column;
     align-items: center;
     width: 100%;
     max-width: 350px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -125,6 +129,20 @@ footer {
     color: #a3a3a3;
 }
 
+/* Add Workout Card */
+.add-workout-card {
+    background-color: #1e1e1e; /* Same background as workout cards */
+    border-radius: 12px; /* Same border radius */
+    padding: 20px; /* Same padding */
+    width: 100%; /* Full width */
+    max-width: 350px; /* Same max width */
+    margin-bottom: 20px; /* Spacing below the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Same shadow effect */
+    display: none; /* Initially hidden */
+    text-align: center; /* Center align text */
+    margin: 20px auto; /* Center the card with auto margin */
+}
+
 /* Exercise List */
 .exercise-list {
     background-color: #1e1e1e;
@@ -153,27 +171,6 @@ footer {
 
 /* Exercise Form */
 .exercise-form {
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* Set List */
-#set-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-#set-list li {
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #3a3a3a;
-    margin-bottom: 5px;
-}
-
-.exercise-form {
     background-color: #f9f9f9; /* Light background for contrast */
     border: 1px solid #ddd; /* Subtle border */
     border-radius: 8px; /* Rounded corners */
@@ -181,8 +178,14 @@ footer {
     margin-top: 16px; /* Space above the form */
 }
 
+/* Input Fields */
 .input-group {
     margin-bottom: 12px; /* Space between input fields */
+}
+
+/* Add spacing specifically for the last input group (submit button) */
+.input-group:last-child {
+    margin-bottom: 20px; /* Increase space below the last input group */
 }
 
 input[type="text"], input[type="number"] {
@@ -198,6 +201,7 @@ input[type="text"]:focus, input[type="number"]:focus {
     outline: none; /* Remove outline */
 }
 
+/* Submit Button */
 .submit-button {
     width: 100%; /* Full width for button */
     padding: 12px; /* Spacing inside button */
@@ -214,6 +218,22 @@ input[type="text"]:focus, input[type="number"]:focus {
     background-color: #0056b3; /* Darker shade on hover */
 }
 
+/* Weight Toggle Button */
+#weight-toggle {
+    background-color: #007bff;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 8px; /* Space below the button */
+}
+
+#weight-toggle:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* List Styling */
 ul {
     list-style-type: none; /* Remove bullets from list */
     padding: 0; /* Remove padding */
@@ -229,14 +249,32 @@ ul li:last-child {
     border-bottom: none; /* Remove divider from last item */
 }
 
-.exercise-card {
-    background-color: #1e1e1e; /* Matching background with workout cards */
-    border: 1px solid #333; /* Slightly darker border */
-    border-radius: 12px; /* Rounded corners */
-    padding: 16px; /* Spacing inside the card */
-    margin-bottom: 16px; /* Space between cards */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Light shadow for depth */
-    transition: transform 0.2s, box-shadow 0.2s; /* Transition effects */
+.add-workout-card {
+    background-color: #1e1e1e; /* Same background as workout cards */
+    border-radius: 12px; /* Same border radius */
+    padding: 20px; /* Same padding */
+    width: 100%; /* Full width */
+    max-width: 350px; /* Same max width */
+    margin-bottom: 20px; /* Spacing below the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Same shadow effect */
+    display: none; /* Initially hidden */
+    text-align: center; /* Center align text */
+    padding: 16px; /* Spacing inside the form */
+    margin-top: 16px; /* Space above the form */
+}
+
+/* Submit Button */
+.add-workout-button {
+    width: 100%; /* Full width for button */
+    padding: 12px; /* Spacing inside button */
+    background-color: #007bff; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Larger font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+    margin-top: 20px;
 }
 
 .exercise-card:hover {
@@ -264,4 +302,9 @@ ul li:last-child {
 
 .exercise-card ul li:last-child {
     border-bottom: none; /* Remove divider from last item */
+}
+
+/* Optional: Modify the input fields and button to ensure they are centered */
+input[type="text"], input[type="number"], .add-workout-button {
+    width: calc(100% - 20px); /* Full width minus padding */
 }
