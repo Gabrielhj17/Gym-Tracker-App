@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Set Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gym Set Tracker</h1>
+    </header>
+    <main>
+        <section class="tracker">
+            <h2>Track Your Sets</h2>
+            <form id="set-form">
+                <input type="text" id="exercise" placeholder="Exercise" required>
+                <select id="exercise-type">
+                    <option value="sets">Sets & Reps</option>
+                    <option value="time">Time</option>
+                    <option value="distance">Distance</option>
+                </select>
+                <input type="number" id="reps" placeholder="Reps" class="exercise-input">
+                <input type="number" id="weight" placeholder="Weight (lbs)" class="exercise-input">
+                <input type="number" id="time" placeholder="Time (minutes)" class="exercise-input hidden">
+                <input type="number" id="distance" placeholder="Distance (miles)" class="exercise-input hidden">
+                <button type="submit">Add Set</button>
+            </form>
+            <ul id="set-list"></ul>
+        </section>
+        <form id="routine-form">
+            <input type="text" id="routine-name" placeholder="Routine Name" required>
+            <ul id="routine-list"></ul>
+            <button type="submit">Save Routine</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gym Set Tracker</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
