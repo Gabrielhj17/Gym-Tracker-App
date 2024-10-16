@@ -104,7 +104,7 @@ h1 {
 /* Bottom Navigation */
 footer {
     width: 100%;
-    max-width: 350px;
+    max-width: 250px;
     margin: 0 auto;
 }
 
@@ -327,4 +327,35 @@ input[type="text"], input[type="number"], .add-workout-button {
     flex-grow: 1;                      /* Allow this to grow and take available space */
     font-size: 1.5em;                  /* Optional: Adjust font size */
     color: white;                       /* Optional: Change text color */
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    padding: 10px 0; /* Add some padding for spacing */
+    background-color: #1e1e1e; /* Background color */
+}
+
+.bottom-nav .nav-item {
+    text-decoration: none; /* Remove underline from links */
+    color: #000; /* Set the text color */
+    padding: 5px 25px; /* Add padding around the text */
+    font-size: 24px; /* Adjust font size if necessary */
+    display: flex; /* Use flex for centering icon */
+    align-items: center; /* Center icon vertically */
+}
+
+.bottom-nav .nav-item:hover {
+    color: #007bff; /* Change color on hover for a visual effect */
+    transition: color 0.3s; /* Smooth transition */
+}
+
+.bottom-nav button {
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer */
+    padding: 0; /* Remove padding */
+    color: inherit; /* Inherit color from parent */
+    font: inherit; /* Inherit font styles */
 }
