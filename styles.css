@@ -1,133 +1,133 @@
 /* Reset */
 * {
-    box-sizing: border-box;
-    margin: 0;
+    box-sizing: border-box; 
+    margin: 0; 
     padding: 0;
 }
 
-body {                     /* Remove default margin */
-    height: 100vh;                     /* Ensure the body takes the full height of the viewport */
-    font-family: 'Roboto', sans-serif;
-    background-color: #0d0d0d;
-    color: #f7f7f7;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100vh;
-    padding: 20px;
+body {
+    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font for text */
+    background-color: #0d0d0d; /* Black background color */
+    color: #f7f7f7; /* White text color */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Use flex column layout */
+    justify-content: space-between; /* Use flex column layout with space between */
+    min-height: 100vh; /* Ensure the body takes the full height of the viewport */
+    padding: 20px; /* Use flex column layout with space between */
 }
 
 /* Header styling */
 header {
-    display: flex;
+    display: flex; /* Use flexbox for header layout */
     justify-content: center; /* Center align header content */
-    align-items: center;
-    padding: 20px;
-    color: #fff;
+    align-items: center; /* Center align header content */
+    padding: 20px; /* Add padding around header */
+    color: #fff; /* White text color */
     flex-direction: column; /* Stack items vertically */
 }
 
 h1 {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 28px; /* Large font size for title */
+    font-weight: bold; /* Bold font weight for title */
     text-align: center; /* Center the text */
     margin-bottom: 10px; /* Space below the title */
 }
 
 .header-icons button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #f7f7f7;
-    cursor: pointer;
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    font-size: 24px; /* Larger icon size */
+    color: #f7f7f7; /* White icon color */
+    cursor: pointer; /* Add cursor pointer */
 }
 
 .add-icon {
-    font-size: 28px;
+    font-size: 28px; /* Small icon size */
 }
 
 /* Workout Cards */
 .workout-cards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
+    display: flex; /* Add flexbox layout */
+    flex-direction: column; /* Add flex column layout */
+    align-items: center; /* Center align items */
+    margin-top: 30px; /* Space above the cards */
 }
 
 .workout-card {
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    justify-content: column;
-    align-items: center;
-    width: 100%;
-    max-width: 350px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #1e1e1e; /* Dark background color */
+    border-radius: 12px; /* Rounded corners */
+    padding: 20px; /* Spacing inside the card */
+    display: flex; /* Flex layout for card content */
+    justify-content: column; /* Stack items vertically */
+    align-items: center; /* Center align items */
+    width: 100%; /* Full width */
+    max-width: 350px;  /* Maximum width for card */
+    margin-top: 30px; /* Space above the card */
+    margin-bottom: 30px; /* Space below the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    transition: transform 0.2s, box-shadow 0.2s; /* transition effect */
 }
 
 .workout-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+    transform: scale(1.02); /* Scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
 }
 
-.workout-details {
-    color: #f7f7f7;
+.workout-details { 
+    color: #f7f7f7; /* White text color */
 }
 
 .workout-count {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 36px; /* Large font size for count */
+    font-weight: bold; /* Bold font weight for count */
+    margin-bottom: 5px; /* Space below the count */
 }
 
 .workout-name {
-    font-size: 18px;
+    font-size: 18px; /* Medium font size for name */
 }
 
 .workout-status {
-    font-size: 14px;
-    color: #a3a3a3;
+    font-size: 14px; /* Small font size for status */
+    color: #a3a3a3; /* Black text color */
 }
 
 .options-icon {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #a3a3a3;
-    cursor: pointer;
+    background: none; /* Black background */
+    border: none; /* Black border */
+    font-size: 24px; /* Small icon size */
+    color: #a3a3a3; /* Small icon color */
+    cursor: pointer; /* Add cursor pointer */
 }
 
 /* Bottom Navigation */
 footer {
-    width: 100%;
-    max-width: 250px;
-    margin: 0 auto;
+    width: 100%; /* Full width */
+    max-width: 250px; /* Maximum width */
+    margin: 0 auto; /* Center the navigation */
 }
 
 .bottom-nav {
-    display: flex;
-    justify-content: space-between;
-    background-color: #1e1e1e;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+    display: flex; /* Flex layout for navigation */
+    justify-content: space-between; /* Space items evenly */
+    background-color: #1e1e1e; /* Dark background color */
+    padding: 15px; /* Padding around navigation */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
 }
 
 .nav-item {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #f7f7f7;
-    cursor: pointer;
-    transition: color 0.3s;
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    font-size: 24px; /* Remove border */
+    color: #f7f7f7; /* White text color */
+    cursor: pointer; /* Remove cursor pointer */
+    transition: color 0.3s; /* Smooth transition for color */
 }
 
 .nav-item:hover {
-    color: #a3a3a3;
+    color: #a3a3a3; /* Change color on hover */
 }
 
 /* Add Workout Card */
@@ -146,28 +146,28 @@ footer {
 
 /* Exercise List */
 .exercise-list {
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    padding: 10px;
-    margin-top: 10px;
+    background-color: #1e1e1e; /* Same background as workout cards */
+    border-radius: 12px; /* Same border radius */
+    padding: 10px; /* Same padding */
+    margin-top: 10px; /* Spacing below the card */
 }
 
 .exercise-list ul {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: none; /* Exercise list without bullets */
+    padding: 0; /* Remove padding */
 }
 
 .exercise-list li {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #2e2e2e;
-    margin-bottom: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 10px; /* Spacing inside list items */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #2e2e2e; /* Darker background for contrast */
+    margin-bottom: 5px; /* Space between list items */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
 }
 
 .exercise-list li:hover {
-    background-color: #3b5998;
+    background-color: #3b5998; /* Darker shade on hover */
 }
 
 /* Exercise Form */
@@ -221,12 +221,12 @@ input[type="text"]:focus, input[type="number"]:focus {
 
 /* Weight Toggle Button */
 #weight-toggle {
-    background-color: #007bff;
-    color: black;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
+    background-color: #007bff; /* Primary color */
+    color: black; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded
+    padding: 5px 10px; /* Spacing inside button */
+    cursor: pointer; /* Change cursor on hover */
     margin-bottom: 8px; /* Space below the button */
 }
 
@@ -320,17 +320,17 @@ input[type="text"], input[type="number"], .add-workout-button {
 }
 
 #no-workouts-message {
-    display: flex;                     /* Use flexbox for centering */
-    justify-content: center;           /* Center horizontally */
-    align-items: center;               /* Center vertically */
-    text-align: center;                /* Center text alignment */
-    flex-grow: 1;                      /* Allow this to grow and take available space */
-    font-size: 1.5em;                  /* Optional: Adjust font size */
-    color: white;                       /* Optional: Change text color */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center; /* Center text alignment */
+    flex-grow: 1; /* Allow this to grow and take available space */
+    font-size: 1.5em;  /* Adjust font size */
+    color: white; /* Change text color */
 }
 
 .bottom-nav {
-    display: flex;
+    display: flex; /* Use flexbox for navigation */
     justify-content: center; /* Center items horizontally */
     align-items: center; /* Center items vertically */
     padding: 10px 0; /* Add some padding for spacing */
