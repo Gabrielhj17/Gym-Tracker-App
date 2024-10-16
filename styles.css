@@ -233,9 +233,9 @@ input[type="text"]:focus, input[type="number"]:focus {
 }
 
 /* Weight Toggle Button */
-#weight-toggle {
+.weight-toggle {
     background-color: #007bff; /* Primary color */
-    color: black; /* Text color */
+    color: white; /* Text color */
     border: none; /* Remove default border */
     border-radius: 4px; /* Rounded corners */
     padding: 5px 10px; /* Spacing inside button */
@@ -243,7 +243,7 @@ input[type="text"]:focus, input[type="number"]:focus {
     margin-bottom: 8px; /* Space below the button */
 }
 
-#weight-toggle:hover {
+.weight-toggle:hover {
     background-color: #0056b3; /* Darker shade on hover */
 }
 
