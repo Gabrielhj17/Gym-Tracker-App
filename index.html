@@ -21,44 +21,23 @@
                 <button type="submit" class="add-workout-button">Add Workout</button>
             </form>
         </div>
-        <section class="workout-cards">
-            <div class="workout-card" onclick="toggleExerciseForm(this)">
-                <div class="workout-details">
-                    <p class="workout-count">0</p>
-                    <p class="workout-name">Pull</p>
-                    <p class="workout-status">Unscheduled</p>
-                </div>
-                <button class="options-icon" aria-label="More Options">&#8942;</button> <!-- Three dots for options -->
-            </div>
-            <div class="exercise-list" style="display: none;">
-                <div class="exercise-form" style="display: block;">
-                    <h3>Add New Set</h3>
-                    <form id="exercise-form">
-                        <div class="input-group">
-                            <input type="text" id="exercise" placeholder="Exercise Name" required>
-                        </div>
-                        <div class="input-group">
-                            <input type="number" id="reps" placeholder="Reps" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="weight">Weight</label>
-                            <button id="weight-toggle" type="button">Switch to lbs</button>
-                            <input type="number" id="weight" placeholder="Weight (kg)" required>
-                        </div>
-                        <button type="submit" class="submit-button">Add Set</button>
-                    </form>
-                </div>
-                <div id="set-list"></div> <!-- Container for sets -->
-            </div>
+
+        <!-- Message to prompt the user to add a workout -->
+        <div id="no-workouts-message" style="display: block;">
+            <p>No workouts added. Please add a workout to get started!</p>
+        </div>
+
+        <section class="workout-cards" id="workout-cards">
+            <!-- Workout cards will be added here -->
         </section>
     </main>
 
     <footer>
         <nav class="bottom-nav">
-            <button class="nav-item" aria-label="Home">🏠</button> <!-- Home Icon -->
-            <button class="nav-item" aria-label="Calendar">🗓️</button> <!-- Calendar Icon -->
-            <button class="nav-item" aria-label="Statistics">📊</button> <!-- Stats Icon -->
-            <button class="nav-item" aria-label="Chat">💬</button> <!-- Chat Icon -->
+            <button class="nav-item" aria-label="Home">🏠</button>
+            <button class="nav-item" aria-label="Calendar">🗓️</button>
+            <button class="nav-item" aria-label="Statistics">📊</button>
+            <button class="nav-item" aria-label="Chat">💬</button>
         </nav>
     </footer>
 

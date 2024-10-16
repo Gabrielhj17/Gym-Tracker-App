@@ -1,46 +1,132 @@
-const exercises = {};
-let weightUnit = 'kg'; // Default unit
+let workoutCount = 0; // Counter to create unique IDs for workout cards
+let exercises = {}; // Object to store exercises
+let weightUnit = 'kg'; // Default weight unit
 
-// Function to handle weight unit toggle in the exercise form
-document.getElementById('weight-toggle').addEventListener('click', function() {
-    weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg'; // Toggle the unit
-    const toggleButton = document.getElementById('weight-toggle');
-    toggleButton.textContent = weightUnit === 'kg' ? 'Switch to lbs' : 'Switch to kg'; // Update button text
-    document.getElementById('weight').placeholder = `Weight (${weightUnit})`; // Update placeholder text
+// References to DOM elements
+const workoutCardsSection = document.getElementById('workout-cards'); // Section where workout cards will be appended
+const noWorkoutsMessage = document.getElementById('no-workouts-message'); // Message to be hidden when a workout is added
+const newWorkoutForm = document.getElementById('new-workout-form'); // Reference to the workout form
+const addWorkoutCard = document.getElementById('add-workout-card'); // Form container (hidden by default)
+const showAddFormButton = document.getElementById('show-add-form'); // "+" button to show the form
+
+// Show the "Add Workout" form when "+" button is clicked
+showAddFormButton.addEventListener('click', function () {
+    addWorkoutCard.style.display = 'block'; // Show the form
 });
 
-// Modify the existing form submission to convert weights if needed
-document.getElementById('exercise-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+// Listen for form submission to add a new workout
+newWorkoutForm.addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent form from reloading the page
 
-    const exerciseName = document.getElementById('exercise').value;
-    const reps = document.getElementById('reps').value;
-    const weightInput = document.getElementById('weight').value;
+    // Get the workout name from the input field
+    const workoutName = document.getElementById('workout-name').value.trim(); // Use trim() to remove extra spaces
 
-    // Convert weight to kg if the unit is lbs
-    let weight = weightInput;
-    if (weightUnit === 'lbs') {
-        weight = (weightInput * 0.453592).toFixed(2); // Convert lbs to kg
+    // Check if the workout name is provided
+    if (workoutName === '') {
+        alert("Please enter a workout name!");
+        return; // Stop if workout name is empty
     }
 
-    // Initialize exercise if it doesn't exist
-    if (!exercises[exerciseName]) {
-        exercises[exerciseName] = [];
-    }
+    // Increment the workout count to create a unique ID
+    workoutCount++;
+    const uniqueId = `workout-${workoutCount}`;
 
-    // Add the set to the specific exercise
-    exercises[exerciseName].push({ reps, weight });
+    // Create a new workout card
+    const workoutCard = document.createElement('div');
+    workoutCard.classList.add('workout-card');
+    workoutCard.setAttribute('data-id', uniqueId); // Use a data attribute for reference
 
-    // Update the exercise list UI
-    updateExerciseList();
+    // Workout card structure
+    workoutCard.innerHTML = `
+        <div class="workout-details">
+            <p class="workout-count">0</p>
+            <p class="workout-name">${workoutName}</p>
+            <p class="workout-status">Unscheduled</p>
+        </div>
+        <div class="exercise-list" id="${uniqueId}-exercise-list" style="display: none;">
+            <div class="exercise-form" style="display: block;">
+                <h3>Add New Set</h3>
+                <form id="${uniqueId}-exercise-form">
+                    <div class="input-group">
+                        <input type="text" id="${uniqueId}-exercise" placeholder="Exercise Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="${uniqueId}-reps" placeholder="Reps" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight">Weight</label>
+                        <button type="button" id="${uniqueId}-weight-toggle" class="weight-toggle">Switch to lbs</button>
+                        <input type="number" id="${uniqueId}-weight" placeholder="Weight (kg)" required>
+                    </div>
+                    <button type="submit" class="submit-button">Add Set</button>
+                </form>
+            </div>
+            <div id="${uniqueId}-set-list"></div> <!-- Unique set list ID -->
+        </div>
+    `;
 
-    // Reset the form
-    document.getElementById('exercise-form').reset();
+    // Append the new workout card to the workout cards section
+    workoutCardsSection.appendChild(workoutCard);
+
+    // Hide the "no workouts" message if it's visible
+    noWorkoutsMessage.style.display = 'none';
+
+    // Clear the input field after the workout is added
+    document.getElementById('workout-name').value = '';
+
+    // Hide the form after adding the workout
+    addWorkoutCard.style.display = 'none';
+
+    // Add event listener for the new exercise form
+    document.getElementById(`${uniqueId}-exercise-form`).addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent page reload
+
+        const exerciseName = document.getElementById(`${uniqueId}-exercise`).value;
+        const reps = document.getElementById(`${uniqueId}-reps`).value;
+        const weightInput = document.getElementById(`${uniqueId}-weight`).value;
+
+        // Convert weight to kg if the unit is lbs
+        let weight = weightInput;
+        if (weightUnit === 'lbs') {
+            weight = (weightInput * 0.453592).toFixed(2); // Convert lbs to kg
+        }
+
+        // Initialize exercise if it doesn't exist
+        if (!exercises[exerciseName]) {
+            exercises[exerciseName] = [];
+        }
+
+        // Add the set to the specific exercise
+        exercises[exerciseName].push({ reps, weight });
+
+        // Update the exercise list UI for this specific workout
+        updateExerciseList(uniqueId);
+
+        // Reset the form
+        document.getElementById(`${uniqueId}-exercise-form`).reset();
+    });
+
+    // Add event listener for weight toggle button
+    const weightToggleButton = document.getElementById(`${uniqueId}-weight-toggle`);
+    weightToggleButton.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent click event from bubbling up
+        weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg'; // Toggle the unit
+        this.textContent = weightUnit === 'kg' ? 'Switch to lbs' : 'Switch to kg'; // Update button text
+        document.getElementById(`${uniqueId}-weight`).placeholder = `Weight (${weightUnit})`; // Update placeholder text
+    });
+
+    // Attach click event to workout card
+    workoutCard.addEventListener('click', function (event) {
+        // Only toggle if the click is not on an input or button
+        if (!event.target.closest('input') && !event.target.closest('button')) {
+            toggleExerciseForm(this);
+        }
+    });
 });
 
-// Update the exercise list UI
-function updateExerciseList() {
-    const setList = document.getElementById('set-list');
+// Update the exercise list UI for a specific workout
+function updateExerciseList(uniqueId) {
+    const setList = document.getElementById(`${uniqueId}-set-list`);
     setList.innerHTML = ''; // Clear current set list
 
     for (const exercise in exercises) {
@@ -48,15 +134,15 @@ function updateExerciseList() {
         li.textContent = `${exercise} - ${exercises[exercise].length} sets`;
         li.classList.add('exercise-item');
         li.onclick = function () {
-            displaySets(exercise);
+            displaySets(exercise, uniqueId);
         };
         setList.appendChild(li);
     }
 }
 
 // Display sets for a selected exercise
-function displaySets(exerciseName) {
-    const setList = document.getElementById('set-list');
+function displaySets(exerciseName, uniqueId) {
+    const setList = document.getElementById(`${uniqueId}-set-list`);
     setList.innerHTML = ''; // Clear current set list
 
     // Populate the set list with sets of the selected exercise
@@ -69,81 +155,6 @@ function displaySets(exerciseName) {
 
 // Toggle the exercise form and set list visibility
 function toggleExerciseForm(workoutCard) {
-    const exerciseList = workoutCard.nextElementSibling; // Get the exercise list associated with the clicked workout
+    const exerciseList = workoutCard.querySelector('.exercise-list'); // Get the exercise list associated with the clicked workout
     exerciseList.style.display = exerciseList.style.display === 'none' || exerciseList.style.display === '' ? 'block' : 'none'; // Toggle visibility
-
-    // Always show the add set button at the top
-    const addSetButton = exerciseList.querySelector('#add-set-button');
-    addSetButton.style.display = 'block'; // Ensure add set button is visible
-
-    // Clear set list if visible
-    const setList = exerciseList.querySelector('#set-list');
-    if (setList.innerHTML !== '') {
-        setList.innerHTML = ''; // Clear displayed sets if they are currently shown
-    }
 }
-
-// Get the "+" button and form elements
-const addButton = document.getElementById('show-add-form');
-const newWorkoutForm = document.getElementById('add-workout-card'); // Corrected to reference the right ID
-
-// Add click event listener to the "+" button
-addButton.addEventListener('click', function() {
-    // Toggle the display of the workout form
-    if (newWorkoutForm.style.display === 'none' || newWorkoutForm.style.display === '') {
-        newWorkoutForm.style.display = 'block'; // Show the form
-        addButton.textContent = '-'; // Change to minus if form is shown
-    } else {
-        newWorkoutForm.style.display = 'none'; // Hide the form
-        addButton.textContent = '+'; // Change back to plus if hidden
-    }
-});
-
-
-// Handle form submission for new workouts
-newWorkoutForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent page reload
-
-    // Get the workout name from the input field
-    const workoutName = document.getElementById('workout-name').value;
-
-    // Create a new workout card
-    const workoutCard = document.createElement('div');
-    workoutCard.classList.add('workout-card');
-    workoutCard.onclick = function() { toggleExerciseForm(this); };
-
-    workoutCard.innerHTML = `
-        <div class="workout-details">
-            <p class="workout-count">0</p>
-            <p class="workout-name">${workoutName}</p>
-            <p class="workout-status">Unscheduled</p>
-        </div>
-        <button class="options-icon" aria-label="More Options">&#8942;</button>
-        <div class="exercise-list" style="display: none;">
-            <div class="exercise-form" style="display: block;">
-                <h3>Add New Set</h3>
-                <form id="exercise-form">
-                    <div class="input-group">
-                        <input type="text" id="exercise" placeholder="Exercise Name" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="number" id="reps" placeholder="Reps" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="weight">Weight</label>
-                        <button id="weight-toggle" type="button">Switch to lbs</button>
-                        <input type="number" id="weight" placeholder="Weight (kg)" required>
-                    </div>
-                    <button type="submit" class="submit-button">Add Set</button>
-                </form>
-            </div>
-            <div id="set-list"></div> <!-- Container for sets -->
-        </div>
-    `;
-
-    // Append the new workout card to the workout cards section
-    document.querySelector('.workout-cards').appendChild(workoutCard);
-
-    // Clear the input field
-    document.getElementById('workout-name').value = '';
-});
