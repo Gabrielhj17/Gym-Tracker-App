@@ -5,7 +5,8 @@
     padding: 0;
 }
 
-body {
+body {                     /* Remove default margin */
+    height: 100vh;                     /* Ensure the body takes the full height of the viewport */
     font-family: 'Roboto', sans-serif;
     background-color: #0d0d0d;
     color: #f7f7f7;
@@ -316,4 +317,14 @@ input[type="text"], input[type="number"], .add-workout-button {
     border-radius: 4px; /* Rounded corners */
     padding: 5px; /* Spacing inside button */
     margin-bottom: 5px; /* Spacing below the button */
+}
+
+#no-workouts-message {
+    display: flex;                     /* Use flexbox for centering */
+    justify-content: center;           /* Center horizontally */
+    align-items: center;               /* Center vertically */
+    text-align: center;                /* Center text alignment */
+    flex-grow: 1;                      /* Allow this to grow and take available space */
+    font-size: 1.5em;                  /* Optional: Adjust font size */
+    color: white;                       /* Optional: Change text color */
 }
