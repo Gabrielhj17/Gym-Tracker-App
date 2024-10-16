@@ -144,6 +144,19 @@ footer {
     margin: 20px auto; /* Center the card with auto margin */
 }
 
+.add-workout-button{
+    width: 100%; /* Full width for button */
+    padding: 12px; /* Spacing inside button */
+    background-color: #007bff; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Larger font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+    margin-top: 10px;
+}
+
 /* Exercise List */
 .exercise-list {
     background-color: #1e1e1e; /* Same background as workout cards */
@@ -252,7 +265,7 @@ footer {
     display: flex; /* Flex layout for navigation */
     justify-content: space-between; /* Space items evenly */
     background-color: #1e1e1e; /* Dark background color */
-    padding: 15px; /* Padding around navigation */
+    padding: 10px; /* Padding around navigation */
     border-radius: 12px; /* Rounded corners */
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect */
 }
@@ -282,4 +295,8 @@ footer {
 
 .bottom-nav button:hover {
     color: #a3a3a3; /* Change color on hover */
+}
+
+#no-workouts-message {
+    text-align: center;
 }
