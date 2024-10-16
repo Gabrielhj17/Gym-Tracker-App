@@ -12,6 +12,7 @@ const showAddFormButton = document.getElementById('show-add-form'); // "+" butto
 // Show the "Add Workout" form when "+" button is clicked
 showAddFormButton.addEventListener('click', function () {
     addWorkoutCard.style.display = 'block'; // Show the form
+    noWorkoutsMessage.style.display = 'none'; // Hide the "no workouts" message
 });
 
 // Listen for form submission to add a new workout
