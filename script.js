@@ -47,19 +47,14 @@ newWorkoutForm.addEventListener('submit', function (e) {
         <div class="exercise-list" id="${uniqueId}-exercise-list" style="display: none;">
             <div class="exercise-form" style="display: block;">
                 <h3>Add New Set</h3>
-                <form id="${uniqueId}-exercise-form">
+                <form id="${uniqueId}-set-form">
                     <div class="input-group">
-                        <input type="text" id="${uniqueId}-exercise" placeholder="Exercise Name" required>
+                        <input type="text" id="${uniqueId}-set-name" placeholder="Set Name" required>
                     </div>
                     <div class="input-group">
-                        <input type="number" id="${uniqueId}-reps" placeholder="Reps" required>
+                        <input type="number" id="${uniqueId}-number-of-sets" placeholder="Number of Sets" required>
                     </div>
-                    <div class="input-group">
-                        <label for="weight">Weight</label>
-                        <button type="button" id="${uniqueId}-weight-toggle" class="weight-toggle">Switch to lbs</button>
-                        <input type="number" id="${uniqueId}-weight" placeholder="Weight (kg)" required>
-                    </div>
-                    <button type="submit" class="submit-button">Add Set</button>
+                    <button type="submit" class="submit-button">Add Sets</button>
                 </form>
             </div>
             <div id="${uniqueId}-set-list"></div> <!-- Unique set list ID -->
@@ -78,42 +73,78 @@ newWorkoutForm.addEventListener('submit', function (e) {
     // Hide the form after adding the workout
     addWorkoutCard.style.display = 'none';
 
-    // Add event listener for the new exercise form
-    document.getElementById(`${uniqueId}-exercise-form`).addEventListener('submit', function (e) {
+    // Add event listener for the new set form
+    document.getElementById(`${uniqueId}-set-form`).addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent page reload
 
-        const exerciseName = document.getElementById(`${uniqueId}-exercise`).value;
-        const reps = document.getElementById(`${uniqueId}-reps`).value;
-        const weightInput = document.getElementById(`${uniqueId}-weight`).value;
+        const setName = document.getElementById(`${uniqueId}-set-name`).value.trim();
+        const numberOfSets = parseInt(document.getElementById(`${uniqueId}-number-of-sets`).value);
 
-        // Convert weight to kg if the unit is lbs
-        let weight = weightInput;
-        if (weightUnit === 'lbs') {
-            weight = (weightInput * 0.453592).toFixed(2); // Convert lbs to kg
+        // Check if the set name and number of sets are valid
+        if (setName === '' || isNaN(numberOfSets) || numberOfSets <= 0) {
+            alert("Please enter valid set information!");
+            return;
         }
 
-        // Initialize exercise if it doesn't exist
-        if (!exercises[exerciseName]) {
-            exercises[exerciseName] = [];
+        // Create an array to store weights for each set
+        let setWeights = [];
+        for (let i = 1; i <= numberOfSets; i++) {
+            setWeights.push({ reps: 0, weight: 0 });
         }
 
-        // Add the set to the specific exercise
-        exercises[exerciseName].push({ reps, weight });
+        // Create input forms for each set
+        setWeights.forEach((_, index) => {
+            const setInputDiv = document.createElement('div');
+            setInputDiv.classList.add('set-input');
 
-        // Update the exercise list UI for this specific workout
-        updateExerciseList(uniqueId);
+            setInputDiv.innerHTML = `
+                <h4>${setName} Set ${index + 1}</h4>
+                <input type="number" placeholder="Reps" class="${uniqueId}-reps" required>
+                <label for="${uniqueId}-weight">Weight</label>
+                <button type="button" class="${uniqueId}-weight-toggle" data-set-index="${index}">Switch to lbs</button>
+                <input type="number" placeholder="Weight (kg)" class="${uniqueId}-weight" required>
+            `;
+
+            document.getElementById(`${uniqueId}-set-list`).appendChild(setInputDiv);
+        });
 
         // Reset the form
-        document.getElementById(`${uniqueId}-exercise-form`).reset();
-    });
+        document.getElementById(`${uniqueId}-set-form`).reset();
 
-    // Add event listener for weight toggle button
-    const weightToggleButton = document.getElementById(`${uniqueId}-weight-toggle`);
-    weightToggleButton.addEventListener('click', function(event) {
-        event.stopPropagation(); // Prevent click event from bubbling up
-        weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg'; // Toggle the unit
-        this.textContent = weightUnit === 'kg' ? 'Switch to lbs' : 'Switch to kg'; // Update button text
-        document.getElementById(`${uniqueId}-weight`).placeholder = `Weight (${weightUnit})`; // Update placeholder text
+        // Add event listeners to all weight toggle buttons and add set buttons
+        setWeights.forEach((_, index) => {
+            const weightToggleButton = setInputDiv.querySelector(`.${uniqueId}-weight-toggle[data-set-index="${index}"]`);
+            const addSetButton = setInputDiv.querySelector(`.${uniqueId}-add-set[data-set-index="${index}"]`);
+
+            weightToggleButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click event from bubbling up
+                weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg'; // Toggle the unit
+                this.textContent = weightUnit === 'kg' ? 'Switch to lbs' : 'Switch to kg'; // Update button text
+                setInputDiv.querySelector(`.${uniqueId}-weight`).placeholder = `Weight (${weightUnit})`; // Update placeholder text
+            });
+
+            addSetButton.addEventListener('click', function() {
+                const reps = setInputDiv.querySelector(`.${uniqueId}-reps`).value;
+                const weightInput = setInputDiv.querySelector(`.${uniqueId}-weight`).value;
+
+                // Convert weight to kg if the unit is lbs
+                let weight = weightInput;
+                if (weightUnit === 'lbs') {
+                    weight = (weightInput * 0.453592).toFixed(2); // Convert lbs to kg
+                }
+
+                // Add the set to the specific exercise
+                exercises[setName] = exercises[setName] || []; // Initialize exercise if it doesn't exist
+                exercises[setName].push({ reps, weight }); // Store the set details
+
+                // Update the exercise list UI for this specific workout
+                updateExerciseList(uniqueId);
+
+                // Reset the input fields
+                setInputDiv.querySelector(`.${uniqueId}-reps`).value = '';
+                setInputDiv.querySelector(`.${uniqueId}-weight`).value = '';
+            });
+        });
     });
 
     // Attach click event to workout card
