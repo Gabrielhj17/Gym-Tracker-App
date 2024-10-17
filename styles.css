@@ -132,16 +132,13 @@ footer {
 
 /* Add Workout Card */
 .add-workout-card {
-    background-color: #1e1e1e; /* Same background as workout cards */
-    border-radius: 12px; /* Same border radius */
-    padding: 20px; /* Same padding */
-    width: 100%; /* Full width */
-    max-width: 350px; /* Same max width */
-    margin-bottom: 20px; /* Spacing below the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Same shadow effect */
-    display: none; /* Initially hidden */
-    text-align: center; /* Center align text */
-    margin: 20px auto; /* Center the card with auto margin */
+    background-color: #2e2e2e; /* Darker background for contrast */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Spacing inside the card */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Space below the card */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
 }
 
 .add-workout-button{
@@ -299,4 +296,27 @@ footer {
 
 #no-workouts-message {
     text-align: center;
+}
+
+.set-card {
+    background-color: #2e2e2e; /* Darker background for contrast */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Spacing inside the card */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Space below the card */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.set-name {
+    text-align: center; /* Center align text */
+}
+.set-card:hover {
+    background-color: #3b5998; /* Darker shade on hover */
+}
+
+.set-details {
+    /* Styles for set details */
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

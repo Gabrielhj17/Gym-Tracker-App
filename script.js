@@ -1,5 +1,5 @@
-let workoutCount = 0;
-let weightUnit = 'kg';
+this.workoutCount = 0;
+this.weightUnit = 'kg';
 
 const workoutCardsSection = document.getElementById('workout-cards');
 const noWorkoutsMessage = document.getElementById('no-workouts-message');
@@ -47,7 +47,6 @@ newWorkoutForm.addEventListener('submit', function (e) {
                     <div id="${uniqueId}-set-details" class="set-details"></div>
                 </form>
             </div>
-            <div id="${uniqueId}-set-list" class="set-list"></div>
         </div>
     `;
 
@@ -59,7 +58,7 @@ newWorkoutForm.addEventListener('submit', function (e) {
     const addSetButton = document.getElementById(`${uniqueId}-add-set-button`);
     const setForm = document.getElementById(`${uniqueId}-set-form`);
     const setDetailsDiv = document.getElementById(`${uniqueId}-set-details`);
-    const setListDiv = document.getElementById(`${uniqueId}-set-list`);
+    const exerciseList = workoutCard.querySelector('.exercise-list');
 
     addSetButton.addEventListener('click', function () {
         const setName = document.getElementById(`${uniqueId}-set-name`).value.trim();
@@ -99,15 +98,29 @@ newWorkoutForm.addEventListener('submit', function (e) {
                 const reps = document.getElementById(`${uniqueId}-reps-${i}`).value;
                 const weight = document.getElementById(`${uniqueId}-weight-${i}`).value;
 
-                const setItem = document.createElement('div');
-                setItem.classList.add('set-item');
-                setItem.textContent = `${setName} - Rep ${i + 1}: Reps: ${reps}, Weight: ${weight} ${weightUnit}`;
-                
-                setItem.addEventListener('click', function() {
-                    alert(`${setName} - Rep ${i + 1}: Reps: ${reps}, Weight: ${weight} ${weightUnit}`);
-                });
+                // Find or create a set card for the given set name
+                let setCard = exerciseList.querySelector(`.set-card[data-set-name="${setName}"]`);
+                if (!setCard) {
+                    setCard = document.createElement('div');
+                    setCard.classList.add('set-card');
+                    setCard.setAttribute('data-set-name', setName);
+                    setCard.innerHTML = `
+                        <div class="set-details">
+                            <p class="set-name">${setName}</p>
+                            <ul class="set-reps-and-weights"></ul>
+                        </div>
+                    `;
+                    exerciseList.appendChild(setCard);
+                }
 
-                setListDiv.appendChild(setItem);
+                // Add reps and weight to the set card
+                const setRepsAndWeightsList = setCard.querySelector('.set-reps-and-weights');
+                const setItem = document.createElement('li');
+                setItem.setAttribute('style', 'white-space: pre;');
+                setItem.textContent = `Set ${i + 1} \r\n`;
+                setItem.textContent += `Reps: ${reps} \r\n`;
+                setItem.textContent += `Weight: ${weight} ${weightUnit}`;
+                setRepsAndWeightsList.appendChild(setItem);
             }
 
             // Reset the form to its original state
