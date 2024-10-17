@@ -1,43 +1,34 @@
-let workoutCount = 0; // Counter to create unique IDs for workout cards
-let exercises = {}; // Object to store exercises
-let weightUnit = 'kg'; // Default weight unit
+let workoutCount = 0;
+let weightUnit = 'kg';
 
-// References to DOM elements
-const workoutCardsSection = document.getElementById('workout-cards'); // Section where workout cards will be appended
-const noWorkoutsMessage = document.getElementById('no-workouts-message'); // Message to be hidden when a workout is added
-const newWorkoutForm = document.getElementById('new-workout-form'); // Reference to the workout form
-const addWorkoutCard = document.getElementById('add-workout-card'); // Form container (hidden by default)
-const showAddFormButton = document.getElementById('show-add-form'); // "+" button to show the form
+const workoutCardsSection = document.getElementById('workout-cards');
+const noWorkoutsMessage = document.getElementById('no-workouts-message');
+const newWorkoutForm = document.getElementById('new-workout-form');
+const addWorkoutCard = document.getElementById('add-workout-card');
+const showAddFormButton = document.getElementById('show-add-form');
 
-// Show the "Add Workout" form when "+" button is clicked
 showAddFormButton.addEventListener('click', function () {
-    addWorkoutCard.style.display = 'block'; // Show the form
-    noWorkoutsMessage.style.display = 'none'; // Hide the "no workouts" message
+    addWorkoutCard.style.display = 'block';
+    noWorkoutsMessage.style.display = 'none';
 });
 
-// Listen for form submission to add a new workout
 newWorkoutForm.addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form from reloading the page
+    e.preventDefault();
 
-    // Get the workout name from the input field
-    const workoutName = document.getElementById('workout-name').value.trim(); // Use trim() to remove extra spaces
+    const workoutName = document.getElementById('workout-name').value.trim();
 
-    // Check if the workout name is provided
     if (workoutName === '') {
         alert("Please enter a workout name!");
-        return; // Stop if workout name is empty
+        return;
     }
 
-    // Increment the workout count to create a unique ID
     workoutCount++;
     const uniqueId = `workout-${workoutCount}`;
 
-    // Create a new workout card
     const workoutCard = document.createElement('div');
     workoutCard.classList.add('workout-card');
-    workoutCard.setAttribute('data-id', uniqueId); // Use a data attribute for reference
+    workoutCard.setAttribute('data-id', uniqueId);
 
-    // Workout card structure
     workoutCard.innerHTML = `
         <div class="workout-details">
             <p class="workout-count">0</p>
@@ -46,147 +37,93 @@ newWorkoutForm.addEventListener('submit', function (e) {
         </div>
         <div class="exercise-list" id="${uniqueId}-exercise-list" style="display: none;">
             <div class="exercise-form" style="display: block;">
-                <h3>Add New Set</h3>
+                <h3 style="color: black;">Add New Set for <strong>${workoutName}</strong></h3>
                 <form id="${uniqueId}-set-form">
                     <div class="input-group">
                         <input type="text" id="${uniqueId}-set-name" placeholder="Set Name" required>
-                    </div>
-                    <div class="input-group">
                         <input type="number" id="${uniqueId}-number-of-sets" placeholder="Number of Sets" required>
                     </div>
-                    <button type="submit" class="submit-button">Add Sets</button>
+                    <button type="button" id="${uniqueId}-add-set-button" class="submit-button">Add Set</button>
+                    <div id="${uniqueId}-set-details" class="set-details"></div>
                 </form>
             </div>
-            <div id="${uniqueId}-set-list"></div> <!-- Unique set list ID -->
+            <div id="${uniqueId}-set-list" class="set-list"></div>
         </div>
     `;
 
-    // Append the new workout card to the workout cards section
     workoutCardsSection.appendChild(workoutCard);
-
-    // Hide the "no workouts" message if it's visible
     noWorkoutsMessage.style.display = 'none';
-
-    // Clear the input field after the workout is added
     document.getElementById('workout-name').value = '';
-
-    // Hide the form after adding the workout
     addWorkoutCard.style.display = 'none';
 
-    // Add event listener for the new set form
-    document.getElementById(`${uniqueId}-set-form`).addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent page reload
+    const addSetButton = document.getElementById(`${uniqueId}-add-set-button`);
+    const setForm = document.getElementById(`${uniqueId}-set-form`);
+    const setDetailsDiv = document.getElementById(`${uniqueId}-set-details`);
+    const setListDiv = document.getElementById(`${uniqueId}-set-list`);
 
+    addSetButton.addEventListener('click', function () {
         const setName = document.getElementById(`${uniqueId}-set-name`).value.trim();
         const numberOfSets = parseInt(document.getElementById(`${uniqueId}-number-of-sets`).value);
 
-        // Check if the set name and number of sets are valid
-        if (setName === '' || isNaN(numberOfSets) || numberOfSets <= 0) {
-            alert("Please enter valid set information!");
+        if (setName === '') {
+            alert("Please enter a set name!");
             return;
         }
 
-        // Create an array to store weights for each set
-        let setWeights = [];
-        for (let i = 1; i <= numberOfSets; i++) {
-            setWeights.push({ reps: 0, weight: 0 });
+        if (isNaN(numberOfSets) || numberOfSets <= 0) {
+            alert("Please enter a valid number of sets!");
+            return;
         }
 
-        // Create input forms for each set
-        setWeights.forEach((_, index) => {
+        setDetailsDiv.innerHTML = '';
+
+        for (let i = 0; i < numberOfSets; i++) {
             const setInputDiv = document.createElement('div');
             setInputDiv.classList.add('set-input');
-
             setInputDiv.innerHTML = `
-                <h4>${setName} Set ${index + 1}</h4>
-                <input type="number" placeholder="Reps" class="${uniqueId}-reps" required>
-                <label for="${uniqueId}-weight">Weight</label>
-                <button type="button" class="${uniqueId}-weight-toggle" data-set-index="${index}">Switch to lbs</button>
-                <input type="number" placeholder="Weight (kg)" class="${uniqueId}-weight" required>
+                <h4 style="color: black;">${setName} - Rep ${i + 1}</h4>
+                <input type="number" id="${uniqueId}-reps-${i}" class="reps-input" placeholder="Reps" required>
+                <input type="number" id="${uniqueId}-weight-${i}" class="weight-input" placeholder="Weight (${weightUnit})" required>
             `;
+            setDetailsDiv.appendChild(setInputDiv);
+        }
 
-            document.getElementById(`${uniqueId}-set-list`).appendChild(setInputDiv);
-        });
+        const confirmSetButton = document.createElement('button');
+        confirmSetButton.type = 'button';
+        confirmSetButton.className = 'submit-button';
+        confirmSetButton.textContent = 'Confirm Sets';
+        setDetailsDiv.appendChild(confirmSetButton);
 
-        // Reset the form
-        document.getElementById(`${uniqueId}-set-form`).reset();
+        confirmSetButton.addEventListener('click', function () {
+            for (let i = 0; i < numberOfSets; i++) {
+                const reps = document.getElementById(`${uniqueId}-reps-${i}`).value;
+                const weight = document.getElementById(`${uniqueId}-weight-${i}`).value;
 
-        // Add event listeners to all weight toggle buttons and add set buttons
-        setWeights.forEach((_, index) => {
-            const weightToggleButton = setInputDiv.querySelector(`.${uniqueId}-weight-toggle[data-set-index="${index}"]`);
-            const addSetButton = setInputDiv.querySelector(`.${uniqueId}-add-set[data-set-index="${index}"]`);
+                const setItem = document.createElement('div');
+                setItem.classList.add('set-item');
+                setItem.textContent = `${setName} - Rep ${i + 1}: Reps: ${reps}, Weight: ${weight} ${weightUnit}`;
+                
+                setItem.addEventListener('click', function() {
+                    alert(`${setName} - Rep ${i + 1}: Reps: ${reps}, Weight: ${weight} ${weightUnit}`);
+                });
 
-            weightToggleButton.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent click event from bubbling up
-                weightUnit = weightUnit === 'kg' ? 'lbs' : 'kg'; // Toggle the unit
-                this.textContent = weightUnit === 'kg' ? 'Switch to lbs' : 'Switch to kg'; // Update button text
-                setInputDiv.querySelector(`.${uniqueId}-weight`).placeholder = `Weight (${weightUnit})`; // Update placeholder text
-            });
+                setListDiv.appendChild(setItem);
+            }
 
-            addSetButton.addEventListener('click', function() {
-                const reps = setInputDiv.querySelector(`.${uniqueId}-reps`).value;
-                const weightInput = setInputDiv.querySelector(`.${uniqueId}-weight`).value;
-
-                // Convert weight to kg if the unit is lbs
-                let weight = weightInput;
-                if (weightUnit === 'lbs') {
-                    weight = (weightInput * 0.453592).toFixed(2); // Convert lbs to kg
-                }
-
-                // Add the set to the specific exercise
-                exercises[setName] = exercises[setName] || []; // Initialize exercise if it doesn't exist
-                exercises[setName].push({ reps, weight }); // Store the set details
-
-                // Update the exercise list UI for this specific workout
-                updateExerciseList(uniqueId);
-
-                // Reset the input fields
-                setInputDiv.querySelector(`.${uniqueId}-reps`).value = '';
-                setInputDiv.querySelector(`.${uniqueId}-weight`).value = '';
-            });
+            // Reset the form to its original state
+            setForm.reset();
+            setDetailsDiv.innerHTML = '';
         });
     });
 
-    // Attach click event to workout card
     workoutCard.addEventListener('click', function (event) {
-        // Only toggle if the click is not on an input or button
         if (!event.target.closest('input') && !event.target.closest('button')) {
             toggleExerciseForm(this);
         }
     });
 });
 
-// Update the exercise list UI for a specific workout
-function updateExerciseList(uniqueId) {
-    const setList = document.getElementById(`${uniqueId}-set-list`);
-    setList.innerHTML = ''; // Clear current set list
-
-    for (const exercise in exercises) {
-        const li = document.createElement('li');
-        li.textContent = `${exercise} - ${exercises[exercise].length} sets`;
-        li.classList.add('exercise-item');
-        li.onclick = function () {
-            displaySets(exercise, uniqueId);
-        };
-        setList.appendChild(li);
-    }
-}
-
-// Display sets for a selected exercise
-function displaySets(exerciseName, uniqueId) {
-    const setList = document.getElementById(`${uniqueId}-set-list`);
-    setList.innerHTML = ''; // Clear current set list
-
-    // Populate the set list with sets of the selected exercise
-    exercises[exerciseName].forEach((set) => {
-        const li = document.createElement('li');
-        li.textContent = `${set.weight} ${weightUnit} - ${set.reps} reps`; // Use the current weight unit
-        setList.appendChild(li);
-    });
-}
-
-// Toggle the exercise form and set list visibility
 function toggleExerciseForm(workoutCard) {
-    const exerciseList = workoutCard.querySelector('.exercise-list'); // Get the exercise list associated with the clicked workout
-    exerciseList.style.display = exerciseList.style.display === 'none' || exerciseList.style.display === '' ? 'block' : 'none'; // Toggle visibility
+    const exerciseList = workoutCard.querySelector('.exercise-list');
+    exerciseList.style.display = exerciseList.style.display === 'none' || exerciseList.style.display === '' ? 'block' : 'none';
 }
